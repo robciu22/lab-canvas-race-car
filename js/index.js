@@ -26,25 +26,29 @@ let score = 0
 let gameOver = false
 let intervalId = 0
 let carX = 200
-let topToBottom = 0
+let topToBottomOne = 0
+let topToBottomTwo = 0
+let topToBottomThree = 0
 
 window.onload = () => {
     canvas.style.display = 'none'
     document.getElementById('start-button').onclick = () => {
-        //the next line is for proofing if...
+        //the next line is for proofing if connected and StartButton is working...
         console.log("Startbutton was clicked")
+
         startGame();
     };
 
     function drawRoad() {
         ctx.beginPath()
-        ctx.drawImage(roadImage, 0, 0, 500, 700)
+        ctx.drawImage(roadImage, 0, 0, canvas.width, canvas.height)
         ctx.closePath()
     }
 
     function drawCar() {
         ctx.beginPath()
         ctx.drawImage(carImage, carX, 450, carWidth, carHeight)
+        ctx.closePath()
             //carX = carX - 1
         if (isCarGoingLeft) {
             if (carX > 0) {
@@ -55,23 +59,46 @@ window.onload = () => {
                 carX += carSpeedValue;
             }
         }
-        ctx.closePath()
     }
 
-
-    function drawObstacle() {
+    function drawObstacleOne() {
         ctx.beginPath()
         ctx.fillStyle = "rgb(126,46,31)"
-        ctx.fillRect(20, topToBottom, 100, 20)
+        ctx.fillRect(65, topToBottomOne, 100, 20)
         ctx.closePath()
 
         //next code is for the obstacle-speed
-        topToBottom += 2
-        if (topToBottom >= 700) {
-            topToBottom = 0
+        topToBottomOne += 2
+        if (topToBottomOne >= 700) {
+            topToBottomOne = 0
         }
     }
 
+    function drawObstacleTwo() {
+        ctx.beginPath()
+        ctx.fillStyle = "rgb(126,46,31)"
+        ctx.fillRect(200, topToBottomTwo, 100, 20)
+        ctx.closePath()
+
+        //next code is for the obstacle-speed
+        topToBottomTwo += 2
+        if (topToBottomTwo >= 700) {
+            topToBottomTwo = 0
+        }
+    }
+
+    function drawObstacleThree() {
+        ctx.beginPath()
+        ctx.fillStyle = "rgb(126,46,31)"
+        ctx.fillRect(340, topToBottomThree, 100, 20)
+        ctx.closePath()
+
+        //next code is for the obstacle-speed
+        topToBottomThree += 2
+        if (topToBottomThree >= 700) {
+            topToBottomThree = 0
+        }
+    }
 
     function drawScore() {
         ctx.beginPath();
@@ -80,21 +107,6 @@ window.onload = () => {
         ctx.fillText(`Score : ${score}`, 80, 50);
         ctx.closePath();
     }
-
-    document.addEventListener("keydown", event => {
-        console.log('this event', event)
-        if (event.code === "ArrowLeft") {
-            isCarGoingLeft = true;
-        }
-        if (event.code === "ArrowRight") {
-            isCarGoingRight = true;
-        }
-    });
-
-    document.addEventListener("keyup", event => {
-        isCarGoingLeft = false;
-        isCarGoingRight = false;
-    });
 
 
     /*function animate() {
@@ -122,7 +134,14 @@ window.onload = () => {
 
         drawScore()
 
-        drawObstacle()
+        drawObstacleOne()
+        setInterval(drawObstacleOne, 10000)
+
+        drawObstacleTwo()
+        setInterval(drawObstacleTwo, 15000)
+
+        drawObstacleThree()
+        setInterval(drawObstacleThree, 20000)
 
 
 
@@ -134,5 +153,20 @@ window.onload = () => {
         }
 
     }
+
+    document.addEventListener("keydown", event => {
+        console.log('this event', event)
+        if (event.code === "ArrowLeft") {
+            isCarGoingLeft = true;
+        }
+        if (event.code === "ArrowRight") {
+            isCarGoingRight = true;
+        }
+    });
+
+    document.addEventListener("keyup", event => {
+        isCarGoingLeft = false;
+        isCarGoingRight = false;
+    });
 
 };
